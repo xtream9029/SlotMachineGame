@@ -71,56 +71,93 @@ public class GameControl : MonoBehaviour
     private void CheckResults()
     {//슬롯의 점수를 결정짓는 부분
 
-        if (rows[0].stoppedSlot == "Diamond" && rows[1].stoppedSlot == "Diamond" || rows[0].stoppedSlot == "Diamond" && rows[2].stoppedSlot == "Diamond" 
-            || rows[1].stoppedSlot == "Diamond" && rows[2].stoppedSlot == "Diamond")
-            prizeValue = 100;
-
-        else if (rows[0].stoppedSlot == "Diamond" && rows[1].stoppedSlot == "Diamond" && rows[2].stoppedSlot == "Diamond")
-            prizeValue = 200;
-
-        else if (rows[0].stoppedSlot == "Crown" && rows[1].stoppedSlot == "Crown" || rows[0].stoppedSlot == "Crown" && rows[2].stoppedSlot == "Crown"
-            || rows[1].stoppedSlot == "Crown" && rows[2].stoppedSlot == "Crown")
-            prizeValue = 300;
-
-        else if (rows[0].stoppedSlot == "Crown" && rows[1].stoppedSlot == "Crown" && rows[2].stoppedSlot == "Diamond")
-            prizeValue = 400;
-
-        else if (rows[0].stoppedSlot == "Watermelon" && rows[1].stoppedSlot == "Watermelon" || rows[0].stoppedSlot == "Watermelon" && rows[2].stoppedSlot == "Watermelon"
-            || rows[1].stoppedSlot == "Watermelon" && rows[2].stoppedSlot == "Watermelon")
-            prizeValue = 500;
-
-        else if (rows[0].stoppedSlot == "Watermelon" && rows[1].stoppedSlot == "Watermelon" && rows[2].stoppedSlot == "Watermelon")
-            prizeValue = 600;
-
-        else if (rows[0].stoppedSlot == "Bar" && rows[1].stoppedSlot == "Bar" || rows[0].stoppedSlot == "Bar" && rows[2].stoppedSlot == "Bar"
-           || rows[1].stoppedSlot == "Bar" && rows[2].stoppedSlot == "Bar")
-            prizeValue = 700;
-
-        else if (rows[0].stoppedSlot == "Bar" && rows[1].stoppedSlot == "Bar" && rows[2].stoppedSlot == "Bar")
-            prizeValue = 800;
-
-        else if (rows[0].stoppedSlot == "7" && rows[1].stoppedSlot == "7" || rows[0].stoppedSlot == "7" && rows[2].stoppedSlot == "7"
-           || rows[1].stoppedSlot == "7" && rows[2].stoppedSlot == "7")
-            prizeValue = 1000;
-
-        else if (rows[0].stoppedSlot == "7" && rows[1].stoppedSlot == "7" && rows[2].stoppedSlot == "7")
-            prizeValue = 1500;
-
-        else if (rows[0].stoppedSlot == "Cherry" && rows[1].stoppedSlot == "Cherry" || rows[0].stoppedSlot == "Cherry" && rows[2].stoppedSlot == "Cherry"
-        || rows[1].stoppedSlot == "Cherry" && rows[2].stoppedSlot == "Cherry")
-            prizeValue = 2000;
-
-        else if (rows[0].stoppedSlot == "Cherry" && rows[1].stoppedSlot == "Cherry" && rows[2].stoppedSlot == "Cherry")
-            prizeValue = 3000;
-
-        else if (rows[0].stoppedSlot == "Mango" && rows[1].stoppedSlot == "Mango" || rows[0].stoppedSlot == "Mango" && rows[2].stoppedSlot == "Mango"
-       || rows[1].stoppedSlot == "Mango" && rows[2].stoppedSlot == "Mango")
-            prizeValue = 4000;
-
-        else if (rows[0].stoppedSlot == "Mango" && rows[1].stoppedSlot == "Mango" && rows[2].stoppedSlot == "Mango")
-            prizeValue = 5000;
-
+        //점수를 결정하는 로직을 좀 더 단순하게 해볼것
+        ScoreDecision();
         resultsChecked = true;//결과 체크값을 참으로 바꿔줌
+    }
+
+    private void ScoreDecision()
+    {
+        int[] A=new int[8];
+        int cnt = 0;    
+
+        for(int i = 1; i < A.Length; i++)
+        {
+            A[i] = 0;
+        }
+
+        for(int i = 0; i < rows.Length; i++)
+        {
+            int k = rows[i].stoppedSlot;
+            A[k]++;
+        }
+
+        int MaxA = -1;
+        for(int i = 1; i < A.Length; i++)
+        {
+            if (MaxA < A[i])
+            {
+                MaxA = i;
+                cnt = A[i];
+            }
+        }
+
+        if (MaxA == 1)
+        {
+            if (cnt >=2)
+            {
+                if (cnt == 3) prizeValue = 200;
+                else prizeValue = 100;
+            }
+        }
+        else if (MaxA == 2)
+        {
+            if (cnt >= 2)
+            {
+                if (cnt == 3) prizeValue = 400;
+                else prizeValue = 300;
+            }
+        }
+        else if (MaxA == 3)
+        {
+            if (cnt >= 2)
+            {
+                if (cnt == 3) prizeValue = 600;
+                else prizeValue = 500;
+            }
+        }
+        else if (MaxA == 4)
+        {
+            if (cnt >= 2)
+            {
+                if (cnt == 3) prizeValue = 800;
+                else prizeValue = 700;
+            }
+        }
+        else if (MaxA == 5)
+        {
+            if (cnt >= 2)
+            {
+                if (cnt == 3) prizeValue = 1500;
+                else prizeValue = 1000;
+            }
+        }
+        else if (MaxA == 6)
+        {
+            if (cnt >= 2)
+            {
+                if (cnt == 3) prizeValue = 3000;
+                else prizeValue = 2000;
+            }
+        }
+        else if (MaxA == 7)
+        {
+            if (cnt >= 2)
+            {
+                if (cnt == 3) prizeValue = 5000;
+                else prizeValue = 4000;
+            }
+        }
     }
 
 }

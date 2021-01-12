@@ -8,7 +8,7 @@ public class Row : MonoBehaviour
     private float timeInterval;
 
     public bool rowStopped;
-    public string stoppedSlot;//결정된 슬롯
+    public int stoppedSlot;//결정된 슬롯
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,7 @@ public class Row : MonoBehaviour
 
     private void StartRotating()
     {
-        stoppedSlot = "";
+        stoppedSlot = 0;
         StartCoroutine("Rotate");
     }
 
@@ -37,13 +37,13 @@ public class Row : MonoBehaviour
                 transform.position = new Vector2(transform.position.x, 3.5f);
             }
 
-            else transform.position = new Vector2(transform.position.x, transform.position.y  -0.025f);
+            //어떤경우에도 실행되도록 해줘야 하므로 if와 쌍으로 묶으면 안됨
+            transform.position = new Vector2(transform.position.x, transform.position.y  -0.25f);
 
             yield return new WaitForSeconds(timeInterval);
         }
 
         randomValue = Random.Range(60, 100);
-
         switch(randomValue % 3)
         {
             case 1:
@@ -59,16 +59,16 @@ public class Row : MonoBehaviour
             if (transform.position.y <= -1.75f)
                 transform.position = new Vector2(transform.position.x, 3.5f);
 
-            else transform.position = new Vector2(transform.position.x, transform.position.y - 0.25f);
+            transform.position = new Vector2(transform.position.x, transform.position.y - 0.25f);
             
             //실제로 릴이 회전하는 속도를 결정짓는 부분
-            if (i > Mathf.RoundToInt(randomValue * 0.25f))
+            if (i > Mathf.RoundToInt(randomValue * 0.5f))
                 timeInterval = 0.05f;
-            if (i > Mathf.RoundToInt(randomValue * 0.25f))
+            if (i > Mathf.RoundToInt(randomValue * 0.5f))
                 timeInterval = 0.1f;
-            if (i > Mathf.RoundToInt(randomValue * 0.25f))
+            if (i > Mathf.RoundToInt(randomValue * 0.5f))
                 timeInterval = 0.15f;
-            if (i > Mathf.RoundToInt(randomValue * 0.25f))
+            if (i > Mathf.RoundToInt(randomValue * 0.5f))
                 timeInterval = 0.2f;
 
             yield return new WaitForSeconds(timeInterval);
@@ -77,35 +77,35 @@ public class Row : MonoBehaviour
         //y좌표에 따라 슬롯을 결정하는 부분
         if (transform.position.y == -1.75f)
         {
-            stoppedSlot = "Diamond";
+            stoppedSlot = 1;//Diamond
         }
         else if (transform.position.y == -1.0f)
         {
-            stoppedSlot = "Crown";
+            stoppedSlot = 2;//Crown
         }
         else if (transform.position.y == -0.25f)
         {
-            stoppedSlot = "Watermelon";
+            stoppedSlot = 3;//Watermelon
         }
         else if (transform.position.y == 0.5f)
         {
-            stoppedSlot = "Bar";
+            stoppedSlot = 4;//Bar
         }
         else if (transform.position.y == 1.25f)
         {
-            stoppedSlot = "7";
+            stoppedSlot = 5;//7
         }
         else if (transform.position.y == 2.0f)
         {
-            stoppedSlot = "Cherry";
+            stoppedSlot = 6;//Cherry
         }
         else if (transform.position.y == 2.75f)
         {
-            stoppedSlot = "Mango";
+            stoppedSlot =7;//Mango
         }
         else if (transform.position.y == 3.5f)
         {
-            stoppedSlot = "Diamond";
+            stoppedSlot =1;//Diamond
         }
 
         rowStopped = true;
